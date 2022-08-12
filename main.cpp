@@ -9,7 +9,7 @@ using namespace std;
 constexpr int minimumProduceTime = 5000;
 constexpr int maximumProduceTime = 15000;
 
-constexpr int numberOfBeehives = 4;
+constexpr int numberOfBeehives = 10;
 
 atomic_bool honeyFull = false;
 
@@ -76,7 +76,13 @@ void RunBehive(int index)
 			cout << "Bee waiting to drop off honey: " << index << endl;
 			const lock_guard<std::mutex> lock(honeyMutex);
 
-			while (honeyFull) {}
+			while (honeyFull) 
+			{
+				if (stopProgram)
+				{
+					return;
+				}
+			}
 
 			cout << "Bee dropped off honey: " << index << endl;
 
