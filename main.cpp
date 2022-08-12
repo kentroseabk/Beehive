@@ -32,7 +32,6 @@ struct Beehive
 	thread produceThread;
 	uint32_t startTime = 0;
 	uint32_t produceTime = 0;
-
 };
 
 Beehive beehives[numberOfBeehives];
@@ -76,6 +75,7 @@ void RunBehive(int index)
 			cout << "Bee waiting to drop off honey: " << index << endl;
 			const lock_guard<std::mutex> lock(honeyMutex);
 
+			// wait until honeyFull is false to drop off honey
 			while (honeyFull) 
 			{
 				if (stopProgram)
